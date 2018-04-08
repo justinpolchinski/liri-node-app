@@ -126,6 +126,24 @@ else if(command == "do-what-it-says"){
             console.log("Song Title: " + data.tracks.items[5].name);
             console.log("Album Title: " + data.tracks.items[5].album.name);
             console.log("=====================================");
+            var logThis = 
+`=====================================
+Artist: ${data.tracks.items[5].album.artists[0].name}
+Album Samples: ${data.tracks.items[5].album.external_urls.spotify}
+Song Title: ${data.tracks.items[5].name}
+Album Title: ${data.tracks.items[5].album.name}
+=====================================`
+            fs.writeFile("log.txt", logThis , function(err) {
+
+                // If the code experiences any errors it will log the error to the console.
+                if (err) {
+                  return console.log(err);
+                }
+              
+                // Otherwise, it will print: "movies.txt was updated!"
+                console.log("log.txt was updated!");
+              
+              });
         });
     });
     
