@@ -73,8 +73,8 @@ else if(command == "spotify-this-song"){
 else if(command == "movie-this"){
     request(`http://www.omdbapi.com/?t=${movieSearch}&y=&plot=short&apikey=${omdb}`, function (error, response, body) {
 
-        console.log(movieSearch);
-        if (movieSearch!=undefined){
+        console.log("Movie Searched: " + movieSearch.length);
+        if (movieSearch!=""){
             if (!error && response.statusCode == 200) {
                 var moviePar = JSON.parse(body, null, 2);
                 console.log(`
@@ -88,6 +88,27 @@ else if(command == "movie-this"){
                 Plot: ${moviePar.Plot}
                 Actor: ${moviePar.Actors}
                 ===========================`);
+                var logThis = `
+===========================
+Title: ${moviePar.Title}
+Year: ${moviePar.Year}
+IMDB rating: ${moviePar.imdbRating}
+Rotten Tomatoes:  ${moviePar.Ratings[1].Value}
+Country of Origin: ${moviePar.Country}
+Language: ${moviePar.Language}
+Plot: ${moviePar.Plot}
+Actor: ${moviePar.Actors}
+===========================`;
+                fs.appendFile("log.txt", logThis , function(err) {
+
+                    // If the code experiences any errors it will log the error to the console.
+                    if (err) {
+                      return console.log(err);
+                    }
+                  
+                    // Otherwise, it will print: "movies.txt was updated!"
+                    console.log("log.txt was updated!");
+                })
             }
         }
         else{
@@ -106,6 +127,27 @@ else if(command == "movie-this"){
                     Plot: ${moviePar.Plot}
                     Actor: ${moviePar.Actors}
                     ===========================`);
+                    var logThis = `
+===========================
+Title: ${moviePar.Title}
+Year: ${moviePar.Year}
+IMDB rating: ${moviePar.imdbRating}
+Rotten Tomatoes:  ${moviePar.Ratings[1].Value}
+Country of Origin: ${moviePar.Country}
+Language: ${moviePar.Language}
+Plot: ${moviePar.Plot}
+Actor: ${moviePar.Actors}
+===========================`;
+                    fs.appendFile("log.txt", logThis , function(err) {
+
+                        // If the code experiences any errors it will log the error to the console.
+                        if (err) {
+                          return console.log(err);
+                        }
+                      
+                        // Otherwise, it will print: "movies.txt was updated!"
+                        console.log("log.txt was updated!");
+                    })
                 }
             });
         }
@@ -132,8 +174,8 @@ Artist: ${data.tracks.items[5].album.artists[0].name}
 Album Samples: ${data.tracks.items[5].album.external_urls.spotify}
 Song Title: ${data.tracks.items[5].name}
 Album Title: ${data.tracks.items[5].album.name}
-=====================================`
-            fs.writeFile("log.txt", logThis , function(err) {
+=====================================`;
+            fs.appendFile("log.txt", logThis , function(err) {
 
                 // If the code experiences any errors it will log the error to the console.
                 if (err) {
